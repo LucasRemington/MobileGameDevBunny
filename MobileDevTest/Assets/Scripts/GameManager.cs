@@ -8,18 +8,20 @@ public class GameManager : MonoBehaviour {
 	public static int Score;
 	//public float min, max;
 	public Text scoreCount;
+	public Text youLose;
 	public GameObject bunPrefab;
 	//float radius = 4;
 	public Transform[] spawnPoints;
 	public float spawnTime;
 	public static int bunsAround;
-	public bool speedOnce;
+	public int publicBuns;
+	//public int speedOnce;
 
 	void Start () {
 		Score = 0;
-		bunsAround = 0;
+		bunsAround = 1;
 		spawnTime = 2f;
-		speedOnce = false;
+		//speedOnce = 0;
 		InvokeRepeating ("Spawn", spawnTime, spawnTime);
 		StartCoroutine(speedBuns());
 	}
@@ -28,8 +30,9 @@ public class GameManager : MonoBehaviour {
 	void Update () {
 		scoreCount.text = "Score: " + Score.ToString ();
 		if (bunsAround > 9) {
-			Debug.Log ("Lose");
+			Lose ();
 		}
+		publicBuns = bunsAround;
 	}
 
 
@@ -39,28 +42,44 @@ public class GameManager : MonoBehaviour {
 		Instantiate (bunPrefab, spawnPoints [spawnPointIndex].position, spawnPoints [spawnPointIndex].rotation);
 		bunsAround++;
 	}
+
 	IEnumerator speedBuns () {
-		if (speedOnce == false) {
-			yield return new WaitForSecondsRealtime (20f);
+		if (spawnTime > 1) {
+			yield return new WaitForSecondsRealtime (10f);
 			CancelInvoke ();
-			InvokeRepeating ("Spawn", spawnTime - 1f, spawnTime - 1f);
-			speedOnce = true;
+			spawnTime = spawnTime - 0.25f;
+			bunnySpeed ();
 			StartCoroutine(speedBuns());
 		}
-
-		if (speedOnce == true) {
-			yield return new WaitForSecondsRealtime (20f);
+		else if (spawnTime > 0.5 && spawnTime <= 1.0) {
+			yield return new WaitForSecondsRealtime (15f);
 			CancelInvoke ();
-			InvokeRepeating ("Spawn", spawnTime - 1.5f, spawnTime - 1.5f);
+			spawnTime = spawnTime - 0.1f;
+			bunnySpeed ();
+			StartCoroutine(speedBuns());
 		}
 	}
 
-	/*Vector3 GeneratedPosition()
+	void bunnySpeed ()
 	{
+		InvokeRepeating ("Spawn", spawnTime, spawnTime);
+		Debug.Log ("faster");
+	}
+
+	void Lose () {
+		CancelInvoke ();
+		Debug.Log ("Lose");
+		PlayerMovement.canShoot = false;
+		youLose.gameObject.SetActive(true);
+	}
+		
+	/*Vector3 GeneratedPosition(){
 		float x, y, z;
 		x = UnityEngine.Random.Range (min, max);
 		y = UnityEngine.Random.Range (min, max);
 		z = -2.33f;
 		return new Vector3 (x, y, z);
 	}*/
+
+	//consolidate into one function - track individiual bun kills
 }

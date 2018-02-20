@@ -6,6 +6,8 @@ public class BunnyPop : MonoBehaviour {
 
 	public float thrust;
 	Rigidbody rigid;
+	public bool amDying;
+	Animator anim;
 
 	void Start()
 	{
@@ -15,6 +17,15 @@ public class BunnyPop : MonoBehaviour {
 	void Awake()
 	{
 		addThrust ();
+	}
+
+	void Update()
+	{
+		if (amDying == true) {
+			Rigidbody rigid = GetComponent<Rigidbody>();
+			rigid.velocity = Vector3.zero;
+			rigid.freezeRotation = true;
+		}
 	}
 
 	void OnCollisionEnter(Collision collision)
@@ -29,7 +40,19 @@ public class BunnyPop : MonoBehaviour {
 
 	void addThrust ()
 	{
+		anim = GetComponent<Animator>();
 		Rigidbody rigid = GetComponent<Rigidbody>();
 		rigid.AddForce(Random.insideUnitCircle * thrust);
+		amDying = false;
 	}
+		
+	public void Die() {
+		anim.SetTrigger("death");
+		amDying = true;
+	}
+
+	public void End() {
+		Destroy(gameObject);
+	}
+
 }

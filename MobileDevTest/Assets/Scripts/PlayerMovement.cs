@@ -7,9 +7,10 @@ public class PlayerMovement : MonoBehaviour {
 	//private Rigidbody rb;
 	//public float speed;
 
-	public bool canShoot = true;
+	public static bool canShoot = true;
 	public float weaponRange = 500f;
-
+	Transform splotSpawn;
+	public GameObject[] bloodSplot;
 	public Camera fpsCam;
 
 	void Start () {
@@ -24,7 +25,11 @@ public class PlayerMovement : MonoBehaviour {
 			Ray ray = fpsCam.ScreenPointToRay(Input.mousePosition);
 			RaycastHit hit;
 			if (Physics.Raycast(ray, out hit, weaponRange) && hit.transform.tag == "Enemy") {
-				Destroy(hit.transform.gameObject);
+				hit.transform.GetComponent<BunnyPop>().Die();
+				splotSpawn = hit.transform.GetComponent<Transform>();
+				Instantiate (bloodSplot[Random.Range(0,bloodSplot.Length)], splotSpawn.transform.position,splotSpawn.transform.rotation);
+				//BunnyPop.amDying = true;
+				//Destroy(hit.transform.gameObject);
 				GameManager.Score++;
 				GameManager.bunsAround--;
 			}
