@@ -20,7 +20,7 @@ public class BunnyPop : MonoBehaviour {
 
 	void Awake()
 	{
-		GameManager.bunsAround++;
+		//GameManager.bunsAround++;
 		notThrust ();
 		addThrust ();
 		bunnyEnter = GetComponent<AudioSource> ();
@@ -72,9 +72,9 @@ public class BunnyPop : MonoBehaviour {
 	}
 
 	public void Die() {
-		if (GameManager.bunsAround > 0) {
+		/*if (GameManager.bunsAround > 0) {
 			GameManager.bunsAround--;
-		}
+		}*/
 		anim.SetTrigger("death");
 		amDying = true;
 	}

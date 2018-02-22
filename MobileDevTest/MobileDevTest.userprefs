@@ -1,12 +1,12 @@
-﻿<Properties StartupItem="Assembly-CSharp.csproj">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\BunnyPop.cs">
+﻿<Properties StartupItem="MobileDevTest.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\GameManager.cs">
     <Files>
-      <File FileName="Assets\Scripts\SpinningCube.cs" Line="20" Column="37" />
-      <File FileName="Assets\Scripts\GameManager.cs" Line="56" Column="2" />
-      <File FileName="Assets\Scripts\PlayerMovement.cs" Line="32" Column="29" />
-      <File FileName="Assets\Scripts\BunnyPop.cs" Line="15" Column="14" />
-      <File FileName="Assets\Scripts\ButtonPress.cs" Line="14" Column="3" />
+      <File FileName="Assets\Scripts\SpinningCube.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\GameManager.cs" Line="21" Column="5" />
+      <File FileName="Assets\Scripts\PlayerMovement.cs" Line="46" Column="25" />
+      <File FileName="Assets\Scripts\BunnyPop.cs" Line="48" Column="4" />
+      <File FileName="Assets\Scripts\ButtonPress.cs" Line="13" Column="2" />
       <File FileName="Assets\Scripts\ParentDetach.cs" Line="12" Column="37" />
     </Files>
   </MonoDevelop.Ide.Workbench>

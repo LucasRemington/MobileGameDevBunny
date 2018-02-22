@@ -9,9 +9,11 @@ public class ButtonPress : MonoBehaviour {
 	public GameObject restartButton;
 	public bool startGame = true;
 	AudioSource pixelDoom;
+	public static bool disableButton;
 
 	void Start () {
 		pixelDoom = GetComponent<AudioSource> ();
+		disableButton = false;
 	}
 
 	public void OnClick () {
@@ -23,7 +25,7 @@ public class ButtonPress : MonoBehaviour {
 			//PlayerMovement.canShoot = true;
 			startGame = false;
 			pixelDoom.Play ();
-		} else if (startGame == false) {
+		} else if (startGame == false && disableButton == false) {
 			GameManager.Score = 0;
 			SceneManager.LoadScene ("bunpop");
 			Debug.Log ("restart");
@@ -34,5 +36,11 @@ public class ButtonPress : MonoBehaviour {
 		if (startButton.activeSelf) {
 			restartButton.gameObject.SetActive (false);
 		}
+	}
+
+	public static IEnumerator waittoClick () {
+		disableButton = true;
+		yield return new WaitForSecondsRealtime (0.5f);
+		disableButton = false;
 	}
 }

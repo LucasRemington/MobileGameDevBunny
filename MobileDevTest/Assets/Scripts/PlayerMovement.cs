@@ -20,10 +20,12 @@ public class PlayerMovement : MonoBehaviour {
 	}
 
 	void Update () {
-		if (Input.GetButtonDown("Fire1") && canShoot == true) {
+
+		Touch finger1 = Input.GetTouch (0);
+		if (canShoot == true && finger1.phase == TouchPhase.Began) {
 			Debug.Log("Bang");
 			StartCoroutine(GunCount());
-			Ray ray = fpsCam.ScreenPointToRay(Input.mousePosition);
+			Ray ray = fpsCam.ScreenPointToRay(finger1.position);
 			RaycastHit hit;
 			if (Physics.Raycast (ray, out hit, weaponRange) && hit.transform.tag == "Enemy" && startButton.activeSelf == false) {
 				hit.transform.GetComponent<BunnyPop> ().Die ();
@@ -41,7 +43,7 @@ public class PlayerMovement : MonoBehaviour {
 
 	IEnumerator GunCount (){
 		canShoot = false;
-		yield return new WaitForSecondsRealtime (0.4f);
+		yield return new WaitForSecondsRealtime (0.1f);
 		canShoot = true;
 	}
 

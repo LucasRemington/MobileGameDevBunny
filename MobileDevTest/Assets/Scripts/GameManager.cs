@@ -12,14 +12,17 @@ public class GameManager : MonoBehaviour {
 	public GameObject bunPrefab;
 	public Transform[] spawnPoints;
 	public float spawnTime;
-	public static int bunsAround;
+	public int bunsAround;
 	public static bool gameStart = false;
 	public int publicBuns;
 	public AudioSource youLoser;
 	public AudioSource pixelDoom;
 	public bool stopSpawn;
+	private bool loseOnce;
 
 	void Start () {
+		Score = 0;
+		loseOnce = false;
 		pixelDoom = GetComponent<AudioSource> ();
 		BunnyPop.bunnygoBoom = false;
 		stopSpawn = false;
@@ -31,16 +34,17 @@ public class GameManager : MonoBehaviour {
 		spawnTime = 2f;
 		InvokeRepeating ("Spawn", spawnTime, spawnTime);
 		StartCoroutine(speedBuns());
-		//youLose.gameObject.SetActive(false);
 		buttonLose.gameObject.SetActive(false);
 	}
-	
+
 
 	void Update () {
 		scoreCount.text = "Score: " + Score.ToString ();
-		if (bunsAround > 9) {
+		if (bunsAround > 9 && loseOnce == false) {
 			Lose ();
 		}
+		GameObject[] enemies = GameObject.FindGameObjectsWithTag ("Enemy");
+		bunsAround = enemies.Length;
 		publicBuns = bunsAround;
 		if (gameStart == true) {
 			beginGame ();
@@ -87,13 +91,17 @@ public class GameManager : MonoBehaviour {
 	}
 
 	void Lose () {
+		loseOnce = true;
 		CancelInvoke ();
 		Debug.Log ("Lose");
 		pixelDoom.Stop ();
-		youLoser.Play ();
+		if (!youLoser.isPlaying){
+			youLoser.Play ();
+		}
 		stopSpawn = true;
 		scoreLocked = Score;
 		BunnyPop.bunnygoBoom = true;
 		buttonLose.gameObject.SetActive(true);
+		StartCoroutine(ButtonPress.waittoClick());
 	}
 }
