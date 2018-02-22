@@ -52,12 +52,12 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\BunnyPop.cs" />
-     <Compile Include="Assets\Scripts\CameraMovement.cs" />
-     <Compile Include="Assets\Scripts\EnemyMovement.cs" />
+     <Compile Include="Assets\Scripts\ButtonPress.cs" />
      <Compile Include="Assets\Scripts\GameManager.cs" />
      <Compile Include="Assets\Scripts\ParentDetach.cs" />
      <Compile Include="Assets\Scripts\PlayerMovement.cs" />
      <Compile Include="Assets\Scripts\SpinningCube.cs" />
+     <None Include="Assets\Assets\Fonts\pizzadudedotdk.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

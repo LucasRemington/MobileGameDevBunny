@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/bunpop.unity
+- path: Assets/Scenes/bunpop.unity
   isLoaded: 1
   isActive: 1
