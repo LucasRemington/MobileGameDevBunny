@@ -75,7 +75,12 @@ public class BunnyPop : MonoBehaviour {
 		/*if (GameManager.bunsAround > 0) {
 			GameManager.bunsAround--;
 		}*/
-		anim.SetTrigger("death");
+		gameObject.tag = "Wall";
+		if (GameManager.wussMode == true) {
+			anim.SetTrigger ("wussdeath");
+		} else { 
+			anim.SetTrigger ("death");
+		}
 		amDying = true;
 	}
 

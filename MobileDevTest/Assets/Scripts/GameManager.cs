@@ -18,14 +18,17 @@ public class GameManager : MonoBehaviour {
 	public AudioSource youLoser;
 	public AudioSource pixelDoom;
 	public bool stopSpawn;
+	public static bool wussMode = false;
 	private bool loseOnce;
 
 	void Start () {
 		Score = 0;
+		ParentDetach.bloodCount = 0;
 		loseOnce = false;
 		pixelDoom = GetComponent<AudioSource> ();
 		BunnyPop.bunnygoBoom = false;
 		stopSpawn = false;
+		//wussMode = true; //fix this
 	}
 
 	void beginGame () {
