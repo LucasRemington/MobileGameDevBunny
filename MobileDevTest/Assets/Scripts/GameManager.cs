@@ -7,9 +7,11 @@ public class GameManager : MonoBehaviour {
 
 	public static int Score;
 	public Text scoreCount;
+	public Text bunCount;
 	public int scoreLocked;
 	public GameObject buttonLose;
 	public GameObject bunPrefab;
+	public GameObject carrotPrefab;
 	public Transform[] spawnPoints;
 	public float spawnTime;
 	public int bunsAround;
@@ -28,7 +30,6 @@ public class GameManager : MonoBehaviour {
 		pixelDoom = GetComponent<AudioSource> ();
 		BunnyPop.bunnygoBoom = false;
 		stopSpawn = false;
-		//wussMode = true; //fix this
 	}
 
 	void beginGame () {
@@ -37,12 +38,14 @@ public class GameManager : MonoBehaviour {
 		spawnTime = 2f;
 		InvokeRepeating ("Spawn", spawnTime, spawnTime);
 		StartCoroutine(speedBuns());
+		StartCoroutine (carrotSpawn ());
 		buttonLose.gameObject.SetActive(false);
 	}
 
 
 	void Update () {
 		scoreCount.text = "Score: " + Score.ToString ();
+		bunCount.text = "Bunnies: " + bunsAround.ToString ();
 		if (bunsAround > 9 && loseOnce == false) {
 			Lose ();
 		}
@@ -58,6 +61,10 @@ public class GameManager : MonoBehaviour {
 			{
 				Score = scoreLocked;
 			}
+		}
+		if (!youLoser.isPlaying && BunnyPop.bunnygoBoom == true && stopSpawn == false){
+			youLoser = GetComponent<AudioSource> ();
+			youLoser.Play ();
 		}
 	}
 
@@ -85,18 +92,28 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 
+	IEnumerator carrotSpawn () {
+		int spawnPointIndex = Random.Range (0, spawnPoints.Length);
+		yield return new WaitForSecondsRealtime (15f);
+		if (bunsAround > 7 && stopSpawn == false || Score > 80 && stopSpawn == false) {
+			Instantiate (carrotPrefab, spawnPoints [spawnPointIndex].position, spawnPoints [spawnPointIndex].rotation);
+		}
+		//Debug.Log ("carrotspawn");
+		StartCoroutine (carrotSpawn ());
+	}
+
 	void bunnySpeed ()
 	{
 		if (stopSpawn == false) {
 			InvokeRepeating ("Spawn", spawnTime, spawnTime);
-			Debug.Log ("faster");
+			//Debug.Log ("faster");
 		}
 	}
 
 	void Lose () {
 		loseOnce = true;
 		CancelInvoke ();
-		Debug.Log ("Lose");
+		//Debug.Log ("Lose");
 		pixelDoom.Stop ();
 		if (!youLoser.isPlaying){
 			youLoser.Play ();
@@ -106,5 +123,11 @@ public class GameManager : MonoBehaviour {
 		BunnyPop.bunnygoBoom = true;
 		buttonLose.gameObject.SetActive(true);
 		StartCoroutine(ButtonPress.waittoClick());
+	}
+
+	public static IEnumerator bunnyGoBoom () {
+		BunnyPop.bunnygoBoom = true;
+		yield return new WaitForSecondsRealtime(0.2f);
+		BunnyPop.bunnygoBoom = false;
 	}
 }

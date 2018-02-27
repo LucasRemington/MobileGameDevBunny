@@ -10,6 +10,7 @@ public class BunnyPop : MonoBehaviour {
 	Animator anim;
 	AudioSource bunPing;
 	public AudioSource bunnyEnter;
+	//public AudioSource carrotPop;
 	public static bool bunnygoBoom = false;
 
 	void Start()
@@ -24,13 +25,15 @@ public class BunnyPop : MonoBehaviour {
 		notThrust ();
 		addThrust ();
 		bunnyEnter = GetComponent<AudioSource> ();
+		//carrotPop = GetComponent<AudioSource> ();
 		bunnyEnter.Play ();
 	}
 
 	void Update()
 	{
+		Rigidbody rigid = GetComponent<Rigidbody>();
 		if (amDying == true) {
-			Rigidbody rigid = GetComponent<Rigidbody>();
+			//Rigidbody rigid = GetComponent<Rigidbody>();
 			rigid.velocity = Vector3.zero;
 			rigid.freezeRotation = true;
 		}
@@ -43,7 +46,7 @@ public class BunnyPop : MonoBehaviour {
 	{
 
 		if(collision.gameObject.tag == "Wall") {
-			Debug.Log ("Hitwall");
+			//Debug.Log ("Hitwall");
 			addThrust ();
 			if (!bunPing.isPlaying){
 				bunPing.Play ();
@@ -72,8 +75,9 @@ public class BunnyPop : MonoBehaviour {
 	}
 
 	public void Die() {
-		/*if (GameManager.bunsAround > 0) {
-			GameManager.bunsAround--;
+		/*if (gameObject.tag == "Carrot") {
+			carrotPop.Play ();
+			Debug.Log ("carrotplay");
 		}*/
 		gameObject.tag = "Wall";
 		if (GameManager.wussMode == true) {

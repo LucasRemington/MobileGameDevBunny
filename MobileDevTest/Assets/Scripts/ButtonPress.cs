@@ -27,7 +27,7 @@ public class ButtonPress : MonoBehaviour {
 	}
 
 	public void OnClick () {
-		Debug.Log ("click");
+		//Debug.Log ("click");
 		if (startGame == true) {
 			startButton.gameObject.SetActive (false);
 			restartButton.gameObject.SetActive (false);
@@ -36,11 +36,8 @@ public class ButtonPress : MonoBehaviour {
 			startGame = false;
 			pixelDoom.Play ();
 		} else if (startGame == false && disableButton == false) {
-			GameManager.Score = 0;
 			restartYes = true;
-			SceneManager.LoadScene ("bunpop");
-			Debug.Log ("restart");
-			//OnClick ();
+			Reload ();
 		}
 	}
 
@@ -48,11 +45,11 @@ public class ButtonPress : MonoBehaviour {
 		if (GameManager.wussMode == true) {
 			GameManager.wussMode = false; 
 			bloodButton.sprite = sprites[0];
-			Debug.Log ("Buttoncolor");
+			//Debug.Log ("Buttoncolor");
 		} else if (GameManager.wussMode == false) {
 			GameManager.wussMode = true; 
 			bloodButton.sprite = sprites[1];
-			Debug.Log ("Buttoncolor");
+			//Debug.Log ("Buttoncolor");
 		}
 	}
 
@@ -64,7 +61,7 @@ public class ButtonPress : MonoBehaviour {
 
 	public static IEnumerator waittoClick () {
 		disableButton = true;
-		yield return new WaitForSecondsRealtime (1.5f);
+		yield return new WaitForSecondsRealtime (2f);
 		disableButton = false;
 	}
 
@@ -78,5 +75,13 @@ public class ButtonPress : MonoBehaviour {
 
 	public void LucasRemington () {
 		Application.OpenURL ("https://lucasremington.github.io");
+	}
+
+	public void Reload () {
+		if (disableButton == false) {
+			GameManager.Score = 0;
+			SceneManager.LoadScene ("bunpop");
+		}
+		//Debug.Log ("restart");
 	}
 }

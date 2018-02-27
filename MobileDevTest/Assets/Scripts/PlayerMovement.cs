@@ -16,7 +16,7 @@ public class PlayerMovement : MonoBehaviour {
 	public Camera fpsCam;
 
 	void Start () {
-		Debug.Log ("start");
+		//Debug.Log ("start");
 		canShoot = true;
 	}
 
@@ -25,7 +25,7 @@ public class PlayerMovement : MonoBehaviour {
 		Touch finger1 = Input.GetTouch (0);
 		if (canShoot == true && finger1.phase == TouchPhase.Began) { 
 		//if (Input.GetButtonDown("Fire1") && canShoot == true) {
-			Debug.Log("Bang");
+			//Debug.Log("Bang");
 			StartCoroutine(GunCount());
 			Ray ray = fpsCam.ScreenPointToRay(finger1.position);
 			//Ray ray = fpsCam.ScreenPointToRay(Input.mousePosition);
@@ -43,6 +43,8 @@ public class PlayerMovement : MonoBehaviour {
 					Instantiate (bloodSplot [Random.Range (0, bloodSplot.Length)], splotSpawn.transform.position, splotSpawn.transform.rotation);
 					//bang ();
 				}
+			} else if (Physics.Raycast (ray, out hit, weaponRange) && hit.transform.tag == "Carrot" && startButton.activeSelf == false) {
+				StartCoroutine (GameManager.bunnyGoBoom());
 			} else {
 				gunFail.Play ();
 			}
